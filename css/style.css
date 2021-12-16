@@ -1,5 +1,6 @@
 .space {
-    margin-top: 3%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .contenedor {
@@ -7,6 +8,11 @@
 }
 
 textarea {
-    min-height: calc(100vh - 192px - 190px - 190px);
-    width: 70%;
+    min-height: calc(100vh - 192px - 190px - 100px);
+    width: 90%;
+}
+
+p {
+    margin: auto;
+    width: 80%;
 }

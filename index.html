@@ -25,75 +25,50 @@
   <div class="blue white-text center">
     <div class="container">
       <div class="section">
-        <h4>Sistema de recomendación</h4>
+        <h4>Modelos Basados en el Contenido</h4>
       </div>
     </div>
   </div>
   <!-- Contenido -->
-  <div class="contenedor row">
-    <!-- Area izquierda -->
-    <div class="col s12 m6">
-      <div class="center">
-        <!-- Métrica elegida - Tipo de predicción - Nro de vecinos considerados -->
-        <div class="space">
-          <div class="col s6 m4">
-            <select id="metrica" class="browser-default">
-              <option value="1" selected disabled>Métrica</option>
-              <option value="1.1">Correlación de Pearson</option>
-              <option value="1.2">Distancia coseno</option>
-              <option value="1.3">Distancia Euclídea</option>
-            </select>
-          </div>
-          <div class="col s6 m4">
-            <select id="prediccion" class="browser-default">
-              <option value="2" selected disabled>Tipo de predicción</option>
-              <option value="2.1">Predicción simple</option>
-              <option value="2.2">Diferencia con la media</option>
-            </select>
-          </div>
-          <div class="col s12 m4">
-            <input class="center" id="num_vecinos" type="number" placeholder="Nro de vecinos considerados">
-          </div>
-        </div>
-        <!-- Boton de cargar archivo -->
-        <div class="center">
-          <input class="space" type='file' onchange="read(this);" />
-        </div>
-        <!-- Matriz cargada -->
-        <div class="center">
-          <textarea class="space" id="matrizOriginal"></textarea>
-        </div>
+  <div class="contenedor">
+    <!-- Carga de documento -->
+    <div class="center">
+      <!-- Boton de cargar archivo -->
+      <div>
+        <input class="space" type='file' onchange="read(this);" />
+      </div>
+      <!-- Documento cargado -->
+      <div>
+        <textarea class="space" id="documentos"></textarea>
       </div>
     </div>
-    <!-- Area derecha -->
-    <div class="col s12 m6">
-      <div class="center">
-        <!-- Boton cargar -->
-        <button disabled class="button space waves-effect waves-light btn-small white-text" type="file"
-          id="cargar_matriz" onclick="predecir()">
-          <i class="material-icons right white-text">equalizer</i>
-          Predecir
-        </button>
-      </div>
-      <div class="center">
-        <!-- Prediccion -->
-        <textarea class="space" id="matrizNueva"></textarea>
-      </div>
-      <div class="center">
-        <!-- Boton cargar -->
-        <a class="space waves-effect waves-light btn-small white-text" onclick="window.location.reload();">
-          <i class="material-icons right white-text">cached</i>
-          Recargar
-        </a>
-      </div>
-      <div class="center">
-        <!-- Boton Git -->
-        <a class="space waves-effect waves-light btn-small white-text"
-          href="https://github.com/alu0101166247/GCO-Sistema-de-recomendacion">
-          <i class="material-icons right white-text">device_hub</i>
-          Volver a GitHub
-        </a>
-      </div>
+    <!-- Salida -->
+    <div class="center">
+      <!-- Boton cargar -->
+      <!--!!!!!!!!!!!!!!!!!!!!!!!!!!>???????????????PONER DISABLE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+      <button class="button space waves-effect waves-light btn-small white-text" type="file" id="cargar_matriz"
+        onclick="generarTablas()">
+        <i class="material-icons right white-text">equalizer</i>
+        Generar Tablas
+      </button>
+    </div>
+    <div class="">
+      <!-- Tablas -->
+      <p class="space" id="tablas"></p>
+    </div>
+    <div class="center">
+      <!-- Boton cargar -->
+      <a class="space waves-effect waves-light btn-small white-text" onclick="window.location.reload();">
+        <i class="material-icons right white-text">cached</i>
+        Recargar
+      </a>
+    </div>
+    <div class="center space">
+      <!-- Boton Git -->
+      <a class="space waves-effect waves-light btn-small white-text" href="">
+        <i class="material-icons right white-text">device_hub</i>
+        Volver a GitHub
+      </a>
     </div>
   </div>
   <!-- Footer -->
@@ -101,7 +76,7 @@
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <h5 class="white-text">Sistema de recomendación</h5>
+          <h5 class="white-text">Modelos Basados en el Contenido</h5>
           <h6>Universidad de la laguna</h6>
         </div>
         <div class="col l4 offset-l2 s12">
