@@ -6,7 +6,7 @@
 
 Este proyecto está desarrollado en Javascript y HTML, en el index.html se encuentra el código en html de la página web donde se puede interactuar con el proyecto:
 
-![index](images/index.png)
+![index](images/index1.png)
 
 El primer paso es pinchar donde dice seleccionar archivo y buscar el .txt que queramos evaluar, una vez hecho esto se habilitara el boton Generar Tablas y podremos ver una salida como la siguiente:
 
