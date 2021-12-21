@@ -1,12 +1,11 @@
-const stopWords = ["a","about","above","after","again","against","all","am","an","and","any","are","aren't","as","at","be","because","been","before","being","below","between","both","but","by","can't","cannot","could","couldn't","did","didn't","do","does","doesn't","doing","don't","down","during","each","few","for","from","further","had","hadn't","has","hasn't","have","haven't","having","he","he'd","he'll","he's","her","here","here's","hers","herself","him","himself","his","how","how's","i","i'd","i'll","i'm","i've","if","in","into","is","isn't","it","it's","its","itself","let's","me","more","most","mustn't","my","myself","no","nor","not","of","off","on","once","only","or","other","ought","our","ours","ourselves","out","over","own","same","shan't","she","she'd","she'll","she's","should","shouldn't","so","some","such","than","that","that's","the","their","theirs","them","themselves","then","there","there's","these","they","they'd","they'll","they're","they've","this","those","through","to","too","under","until","up","very","was","wasn't","we","we'd","we'll","we're","we've","were","weren't","what","what's","when","when's","where","where's","which","while","who","who's","whom","why","why's","with","won't","would","wouldn't","you","you'd","you'll","you're","you've","your","yours","yourself","yourselves"];
+let stopWords = []; //Vector con todas las Stop Words
+let myMatrix = []; //Matriz inicial sin simbolos ni stopwords
+let matrixHash = []; //Matriz para calcular los TF, IDF y TF-IDF
+let words = []; //Matriz con todas las palabras de todos los documentos sin repetir
+let wordsHash = {}; //Hash con en numero de veces que cada palabra se repite en todos los documentos (para IDF)
+let numDocuments = 0; //Numero total de documentos
+let similaridad = []; //Matriz para calcular la similaridad
 
-let myMatrix = [];      //Matriz inicial sin simbolos ni stopwords
-let matrixHash =[];     //Matriz para calcular los TF, IDF y TF-IDF
-let words = [];         //Matriz con todas las palabras de todos los documentos sin repetir
-let wordsHash = {};     //Hash con en numero de veces que cada palabra se repite en todos los documentos (para IDF)
-let numDocuments = 0;   //Numero total de documentos
-let similaridad = [];   //Matriz para calcular la similaridad
-    
 //Funcion para ver si una matriz esta limpia
 function limpio(matriz) {
   for (x in matriz) {
@@ -24,7 +23,11 @@ function limpiar(matriz) {
   while (!limpio(matriz)) {
     for (x in matriz) {
       for (y in matriz[x]) {
-        if (matriz[x][y] === "" || matriz[x][y] === " " || matriz[x][y] === "-") {
+        if (
+          matriz[x][y] === "" ||
+          matriz[x][y] === " " ||
+          matriz[x][y] === "-"
+        ) {
           if (matriz[x].length === 1) {
             matriz.length--;
           } else {
@@ -34,6 +37,23 @@ function limpiar(matriz) {
       }
     }
   }
+}
+
+//Funcion que llena el vector de Stop Words
+function llenar_stopWords(file) {
+  var rawFile = new XMLHttpRequest();
+  rawFile.open("GET", file, false);
+  rawFile.onreadystatechange = function () {
+    if (rawFile.readyState === 4) {
+      if (rawFile.status === 200 || rawFile.status == 0) {
+        stopWords = rawFile.responseText.replace(/\r/g, "").split("\n");
+        stopWords = stopWords.filter((pal) => pal !== "");
+      }
+    }
+  };
+  rawFile.send(null);
+  console.log(`Vector de Stop Words:`);
+  console.log(stopWords);
 }
 
 //Cuenta cuantas veces esta contenida una palabra en todos los documentos (Sin contar repeticion en mismo documento)
@@ -181,7 +201,10 @@ function similaridadCoseno() {
       }
       botI = Math.sqrt(botI);
       botD = Math.sqrt(botD);
-      row_data_3.innerHTML = ((top / (botI * botD)).toFixed(2)) == 1 ? '* ' + ((top / (botI * botD)).toFixed(0)) + ' *' : ((top / (botI * botD)).toFixed(2));
+      row_data_3.innerHTML =
+        (top / (botI * botD)).toFixed(2) == 1
+          ? "* " + (top / (botI * botD)).toFixed(0) + " *"
+          : (top / (botI * botD)).toFixed(2);
       row.appendChild(row_data_1);
       row.appendChild(row_data_2);
       row.appendChild(row_data_3);
@@ -266,10 +289,11 @@ function generarTablas() {
 
 //Funcion que lee el txt y carga la info limpia en myMatrix
 function read(input) {
+  llenar_stopWords("/stopWords.txt");
   let salida_tablas = document.getElementById("tablas");
   let salida_tablas_similaridad = document.getElementById("tablaSimilaridad");
-  salida_tablas.innerHTML = '';
-  salida_tablas_similaridad.innerHTML = '';
+  salida_tablas.innerHTML = "";
+  salida_tablas_similaridad.innerHTML = "";
   myMatrix = [];
   let button = document.querySelector(".button");
   button.disabled = false;
@@ -280,7 +304,7 @@ function read(input) {
       myMatrix = contents.split("\n");
       mostrarDocumentos(myMatrix);
       for (x in myMatrix) {
-        myMatrix[x] = myMatrix[x].replace(/\?|!|\.|,|\r/g, "");
+        myMatrix[x] = myMatrix[x].replace(/\?|!|\.|,|\r|;/g, "");
         myMatrix[x] = myMatrix[x].replace(/\s+/g, " ");
         myMatrix[x] = myMatrix[x].split(" ");
       }
