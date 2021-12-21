@@ -48,7 +48,7 @@ tr:hover td {
 }
 
 textarea {
-  min-height: calc(100vh - 200px - 200px - 290px);
+  min-height: calc(100vh - 222px - 200px - 300px);
   width: 93%;
   padding: 12px 20px;
   box-sizing: border-box;
