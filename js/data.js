@@ -1,4 +1,3 @@
-let stopWords = []; //Vector con todas las Stop Words
 let myMatrix = []; //Matriz inicial sin simbolos ni stopwords
 let matrixHash = []; //Matriz para calcular los TF, IDF y TF-IDF
 let words = []; //Matriz con todas las palabras de todos los documentos sin repetir
@@ -37,23 +36,6 @@ function limpiar(matriz) {
       }
     }
   }
-}
-
-//Funcion que llena el vector de Stop Words
-function llenar_stopWords(file) {
-  var rawFile = new XMLHttpRequest();
-  rawFile.open("GET", file, false);
-  rawFile.onreadystatechange = function () {
-    if (rawFile.readyState === 4) {
-      if (rawFile.status === 200 || rawFile.status == 0) {
-        stopWords = rawFile.responseText.replace(/\r/g, "").split("\n");
-        stopWords = stopWords.filter((pal) => pal !== "");
-      }
-    }
-  };
-  rawFile.send(null);
-  console.log(`Vector de Stop Words:`);
-  console.log(stopWords);
 }
 
 //Cuenta cuantas veces esta contenida una palabra en todos los documentos (Sin contar repeticion en mismo documento)
@@ -289,7 +271,8 @@ function generarTablas() {
 
 //Funcion que lee el txt y carga la info limpia en myMatrix
 function read(input) {
-  llenar_stopWords("/stopWords.txt");
+  //console.log(`Vector de stop words:`);
+  //console.log(STOPWORDS);
   let salida_tablas = document.getElementById("tablas");
   let salida_tablas_similaridad = document.getElementById("tablaSimilaridad");
   salida_tablas.innerHTML = "";
@@ -310,7 +293,7 @@ function read(input) {
       }
       for (x in myMatrix) {
         for (y in myMatrix[x]) {
-          if (stopWords.includes(myMatrix[x][y].toLowerCase())) {
+          if (STOPWORDS.includes(myMatrix[x][y].toLowerCase())) {
             myMatrix[x][y] = "";
           }
         }
