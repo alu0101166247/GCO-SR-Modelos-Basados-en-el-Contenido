@@ -38,6 +38,7 @@ function limpiar(matriz) {
 
 //Cuenta cuantas veces esta contenida una palabra en todos los documentos (Sin contar repeticion en mismo documento)
 function llenar_wordsHash() {
+  numDocuments = 0;
   wordsHash = [];
   for (x in myMatrix) {
     numDocuments++;
